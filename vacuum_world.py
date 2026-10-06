@@ -20,10 +20,10 @@ class VacuumEnvironment():
                 self.status[agent.location] = 'Clean'
 
     def default_location(self, thing):
-        return random.choice(["loc_A", "loc_B", "loc_C", "loc_D",
-                            "loc_E", "loc_F", "loc_G", "loc_H",
-                            "loc_I", "loc_J", "loc_K", "loc_L",
-                            "loc_M", "loc_N", "loc_O", "loc_P"])
+        choices = []
+        for i in range(16):
+            choices.append("loc_" + chr(ord('A') + i))
+        return random.choice(choices)
 
 vacuum_env = VacuumEnvironment()
 print("State of the Environment: {}.".format(vacuum_env.status))
