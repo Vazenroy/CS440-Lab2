@@ -36,6 +36,22 @@ class environment():
                 else:
                     print(self.env[row][col], end = " ")
             print() # newline
+
+    def get_percept(self, V):
+        row = V.row
+        col = V.col
+
+        curr = self.env[row][col]
+        neighbors = {}
+        #check if valid move, if not, it isn't added to percept. 
+        if row > 0:
+            neighbors['Up'] = self.env[row - 1][col]
+        if row < 3:
+            neighbors['Down'] = self.env[row + 1][col]
+        if col > 0:
+            neighbors['Left'] = self.env[row][col - 1]
+        if col < 3:
+            neighbors['Right'] = self.env[row][col - 1]
     
 # main statement just to prove that it works 
 if __name__ == "__main__":
