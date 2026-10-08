@@ -6,3 +6,4 @@ class vacuum:
         self.col = 0
 
     # VERY skeleton vacuum class.
+    # should be able to make it into a skeleton for hillclimb and simulated annealing
