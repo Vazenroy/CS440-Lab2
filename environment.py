@@ -51,7 +51,7 @@ class environment():
         if col > 0:
             neighbors['Left'] = self.env[row][col - 1]
         if col < 3:
-            neighbors['Right'] = self.env[row][col - 1]
+            neighbors['Right'] = self.env[row][col + 1]
         
         return neighbors
 # main statement just to prove that it works 
@@ -60,6 +60,7 @@ if __name__ == "__main__":
     env.set_HC_env()
     V = vacuum.vacuum(env)
     env.insert_vacuum(V, 2,2)
+    print(env.get_percept(V))
     env.draw_environment()
     
 
