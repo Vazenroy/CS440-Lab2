@@ -2,8 +2,8 @@ import numpy as np
 import vacuum
 
 
-class enviornment():
-    #creates enviornment
+class environment():
+    #creates environment
     def __init__(self):
         self.env = [[0,0,0,0],
                [0,0,0,0],
@@ -28,7 +28,7 @@ class enviornment():
         V.col = col
         self.vacuum = V
 
-    def draw_enviornment(self):
+    def draw_environment(self):
         for row in range(4):
             for col in range(4):
                 if row == self.vacuum.row and col == self.vacuum.col:
@@ -39,11 +39,11 @@ class enviornment():
     
 # main statement just to prove that it works 
 if __name__ == "__main__":
-    env = enviornment()
+    env = environment()
     env.set_HC_env()
     V = vacuum.vacuum(env)
     env.insert_vacuum(V, 2,2)
-    env.draw_enviornment()
+    env.draw_environment()
     
 
 
