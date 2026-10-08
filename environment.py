@@ -1,5 +1,6 @@
 import numpy as np
 import vacuum
+from HillClimbingAgent import HillClimbingAgent
 
 
 class environment():
@@ -9,34 +10,38 @@ class environment():
                [0,0,0,0],
                [0,0,0,0],
                [0,0,0,0]]
-    
+    # different testing env
     def set_HC_env(self):
         self.env = [[0,3,2,0],
                [0,0,0,0],
                [0,4,6,8],
                [7,9,0,10]]
     
+    # different testing env
     def set_SA_env(self):
         self.env = [[0,3,2,0],
                [3,6,0,0],
                [5,0,6,8],
                [4,9,0,10]]
-    
+        
+    # inserts vacuum 
     def insert_vacuum(self, V, row, col):
         V.dirt_level = self.env[row][col]
         V.row = row
         V.col = col
         self.vacuum = V
 
+    # prints the environment as not <python_object> and places vacuum visually without overriding data
     def draw_environment(self):
         for row in range(4):
             for col in range(4):
                 if row == self.vacuum.row and col == self.vacuum.col:
-                    print("V",end=" ")
+                    print("\033[31mV\033[0m",end=" ") # the weird text is to make it red to make it easier to see
                 else:
                     print(self.env[row][col], end = " ")
             print() # newline
 
+    # shows perceptible squares from where the vacuum is
     def get_percept(self, V):
         row = V.row
         col = V.col
@@ -54,14 +59,45 @@ class environment():
             neighbors['Right'] = self.env[row][col + 1]
         
         return curr, neighbors
+
+    # actually moves the vacuum 
+    def move(self, V, direction):
+        if direction == 'Up':
+            V.row -= 1
+        if direction == 'Down':
+            V.row += 1
+        if direction == 'Left':
+            V.col -= 1
+        if direction == 'Right':
+            V.col += 1
+
 # main statement just to prove that it works 
 if __name__ == "__main__":
     env = environment()
     env.set_HC_env()
-    V = vacuum.vacuum(env)
-    env.insert_vacuum(V, 2,2)
-    print(env.get_percept(V))
-    env.draw_environment()
+    V = HillClimbingAgent(env)
+    env.insert_vacuum(V, 0,3)
+
+
+    #WORKING HILL CLIMB ALGORITHM.
+    completed = False
+    while completed == False:
+        print("Current location:", V.row, V.col)
+        env.draw_environment()
+        print()
+        curr, neighbors = env.get_percept(V)
+        direction = V.choose_move(curr, neighbors)
+        if direction =='NoOp':
+            print("Hill climbing maximum found at:",V.row, V.col)
+            completed = True # dirt max found
+        else:
+            print("Moved", direction)
+            env.move(V,direction)
+
+
+    
+
+  
     
 
 

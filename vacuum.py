@@ -5,5 +5,7 @@ class vacuum:
         self.row = 0
         self.col = 0
 
-    # VERY skeleton vacuum class.
-    # should be able to make it into a skeleton for hillclimb and simulated annealing
+    def choose_move(self,current,neighbors):
+        #should be overwritten by hillclimb and annealing. Nothing else should need to be added here
+        raise NotImplementedError
+    
