@@ -53,7 +53,7 @@ class environment():
         if col < 3:
             neighbors['Right'] = self.env[row][col + 1]
         
-        return neighbors
+        return curr, neighbors
 # main statement just to prove that it works 
 if __name__ == "__main__":
     env = environment()
