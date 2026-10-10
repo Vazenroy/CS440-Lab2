@@ -1,7 +1,7 @@
 import numpy as np
 import vacuum
 from HillClimbingAgent import HillClimbingAgent
-
+from SimulatedAnnealing import SimulatedAnnealing
 
 class environment():
     #creates environment
@@ -70,6 +70,8 @@ class environment():
             V.col -= 1
         if direction == 'Right':
             V.col += 1
+        else:
+            pass
 
 # main statement just to prove that it works 
 if __name__ == "__main__":
@@ -78,8 +80,8 @@ if __name__ == "__main__":
     V = HillClimbingAgent(env)
     env.insert_vacuum(V, 0,3)
 
-
     #WORKING HILL CLIMB ALGORITHM.
+    print("\033[31mRunning Hill Climbing Algorithm:\033[0m",end=" ")
     completed = False
     while completed == False:
         print("Current location:", V.row, V.col)
@@ -93,24 +95,30 @@ if __name__ == "__main__":
         else:
             print("Moved", direction)
             env.move(V,direction)
-
-
     
+    envSA = environment()
+    envSA.set_SA_env()
+    V_sa = SimulatedAnnealing(env)
+    envSA.insert_vacuum(V_sa, 0, 3)
 
-  
-    
+    #WORKING SIMULATED ANNEALING ALGORITHM
+    print("\033[31mRunning Simulated Annealing Algorithm:\033[0m",end=" ")
+    completedSA = False
+    t = 1
+    while completedSA == False:
+        #print current environment state
+        print("Current location:", V_sa.row, V_sa.col)
+        envSA.draw_environment()
+        print()
 
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
+        #Run simulated annealing once
+        curr, neighbors = envSA.get_percept(V_sa)
+        direction = V_sa.choose_move(curr, neighbors, t)
+        if direction == 'Highest Found':
+            print("Simulated annealing maximum found at:",V_sa.row, V_sa.col)
+            completedSA = True
+        else:
+            print()
+            print("Moved", direction)
+            env.move(V_sa, direction)
+        t += 1
